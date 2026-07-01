@@ -12,16 +12,16 @@ Clash Mini / subconverter 用的分流外部配置。
 
 - `✨ AI`
 - `🤖 Meta AI`
-- `🔍 Google`
-- `🔎 Perplexity`
+- `🌐 Google`
+- `🧠 Perplexity`
 - `🎥 流媒体`
 - `💻 GitHub`
 - `💬 Reddit`
 - `🟩 Nvidia`
 - `🍎 Apple`
-- `🪟 Microsoft`
+- `💼 Microsoft`
 - `🎮 Games`
-- `🪙 Crypto`
+- `💰 Crypto`
 - `🧪 Test`
 - `🚫 Block`
 - `🌍 国外`
