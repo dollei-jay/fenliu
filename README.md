@@ -4,41 +4,31 @@ Clash Mini / subconverter 用的分流外部配置。
 
 ## 文件
 
-- `dollei-final.ini`：基于 `final.yaml` 分流规则整理的 mini 配置。
+- `dollei-final.ini`：基于 `final.yaml` 分流规则整理的 mini 配置，策略组已简化为直接手动选择节点。
 
 ## 分流策略
 
-当前配置保留了 `final.yaml` 的主要分流组：
+当前配置保留了 `final.yaml` 的主要分流顺序，并给策略组加了图标：
 
-- `AI`
-- `Meta AI`
-- `Google`
-- `Perplexity`
-- `Stream Media`
-- `GitHub`
-- `Reddit`
-- `Nvidia`
-- `Apple`
-- `Microsoft`
-- `Games`
-- `Crypto`
-- `Test`
-- `Block`
-- `国外`
-- `国内`
-- `其他`
+- `✨ AI`
+- `🤖 Meta AI`
+- `🔍 Google`
+- `🔎 Perplexity`
+- `🎥 流媒体`
+- `💻 GitHub`
+- `💬 Reddit`
+- `🟩 Nvidia`
+- `🍎 Apple`
+- `🪟 Microsoft`
+- `🎮 Games`
+- `🪙 Crypto`
+- `🧪 Test`
+- `🚫 Block`
+- `🌍 国外`
+- `➡️ 国内`
+- `🧭 其他`
 
-节点策略组包含：
-
-- `所有-手动`
-- `所有-自动`
-- `家宽`
-- `香港-自动` / `香港-故转`
-- `台湾-故转`
-- `日本-故转`
-- `新加坡-故转`
-- `美国-故转`
-- `其他-故转`
+已移除地区节点组、自动测速组和故转组。除 `➡️ 国内` 默认 `DIRECT`、`🚫 Block` 默认 `REJECT` 外，其余策略组会直接展开节点列表，方便手动选择。
 
 ## 使用
 
