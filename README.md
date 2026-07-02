@@ -1,6 +1,6 @@
 # fenliu
 
-Clash Mini / subconverter 用的分流外部配置。
+我的针对clash客户端的自用分流规则,Clash Mini / subconverter 用的分流外部配置。原则上以后我只用维护direct列表即可
 
 ## 文件
 
