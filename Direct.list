@@ -6,6 +6,7 @@ DOMAIN-SUFFIX,synology.me,DIRECT
 DOMAIN-SUFFIX,ceedi.cn,DIRECT
 DOMAIN-SUFFIX,sdicin.com,DIRECT
 DOMAIN-SUFFIX,yonyoucloud.com,DIRECT
+DOMAIN-SUFFIX,gh-proxy.com,DIRECT
 
 
 # 域名后缀匹配
