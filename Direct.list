@@ -2,7 +2,7 @@
 # MyList # Personal direct rules
 DOMAIN-SUFFIX,sdic.com.cn,DIRECT
 DOMAIN-SUFFIX,dollei.top,DIRECT
-DOMAIN-SUFFIX,synology.me,DIRECT
+# DOMAIN-SUFFIX,synology.me,DIRECT
 DOMAIN-SUFFIX,ceedi.cn,DIRECT
 DOMAIN-KEYWORD,ceedi,DIRECT
 DOMAIN-SUFFIX,sdicin.com,DIRECT
