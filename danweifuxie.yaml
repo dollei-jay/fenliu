@@ -1,3 +1,8 @@
-# 单位特殊覆写列表，配合tune模式
+# 单位特殊覆写列表,配合tune
 prepend-rules:
-  - DOMAIN-SUFFIX,dollei.top,🌍 国外
+  # 域名规则 -> 走向你的国内策略组
+  #- DOMAIN-SUFFIX,dollei.top,➡️ 国内
+  #- DOMAIN-KEYWORD,danwei,➡️ 国内
+  
+  # 要走代理的特殊域名
+  # - DOMAIN-SUFFIX,dollei.top,🌍 国外
