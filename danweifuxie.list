@@ -1,0 +1,12 @@
+# 直连补充列表(国内域名不解析时，防止走代理使用)
+# MyList # Personal direct rules
+DOMAIN-SUFFIX,sdic.com.cn,DIRECT
+DOMAIN-SUFFIX,dollei.top,DIRECT
+# DOMAIN-SUFFIX,synology.me,DIRECT
+DOMAIN-SUFFIX,ceedi.cn,DIRECT
+DOMAIN-KEYWORD,ceedi,DIRECT
+DOMAIN-SUFFIX,sdicin.com,DIRECT
+DOMAIN-SUFFIX,yonyoucloud.com,DIRECT
+DOMAIN-SUFFIX,gh-proxy.com,DIRECT
+DOMAIN-SUFFIX,gov.cn,DIRECT
+DOMAIN-SUFFIX,2925.com,DIRECT
