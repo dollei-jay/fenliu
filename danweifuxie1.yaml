@@ -1,8 +1,15 @@
-# 单位特殊覆写列表,配合tune
-prepend-rules:
-  # 域名规则 -> 走向你的国内策略组
-  #- DOMAIN-SUFFIX,dollei.top,➡️ 国内
-  #- DOMAIN-KEYWORD,danwei,➡️ 国内
-  
-  # 要走代理的特殊域名
-  - DOMAIN-SUFFIX,dollei.top,🌍 国外
+function main(config) {
+  // 插入你的自定义规则到 rules 数组顶部
+  const customRules = [
+    'DOMAIN-SUFFIX,dollei.top,🌍 国外', // 替换为你需要的节点或策略组名称
+    // 'DOMAIN-KEYWORD,internal-oa,DIRECT',
+  ];
+
+  if (Array.isArray(config.rules)) {
+    config.rules = [...customRules, ...config.rules];
+  } else {
+    config.rules = customRules;
+  }
+
+  return config;
+}
