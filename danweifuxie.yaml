@@ -5,4 +5,4 @@ prepend-rules:
   #- DOMAIN-KEYWORD,danwei,➡️ 国内
   
   # 要走代理的特殊域名
-  # - DOMAIN-SUFFIX,dollei.top,🌍 国外
+  - DOMAIN-SUFFIX,dollei.top,🌍 国外
