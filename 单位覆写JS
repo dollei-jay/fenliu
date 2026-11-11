@@ -1,8 +1,14 @@
 function main(config) {
-  // 插入你的自定义规则到 rules 数组顶部
   const customRules = [
-    'DOMAIN-SUFFIX,dollei.top,🌍 国外', // 替换为你需要的节点或策略组名称
-    // 'DOMAIN-KEYWORD,internal-oa,DIRECT',
+    // 1. 通过进程名称匹配（Windows/macOS 常见，注意区分大小写，如 steam.exe、qbittorrent）
+    'PROCESS-NAME,Weixin.exe,➡️ 国内',
+    'PROCESS-NAME,ImeService.exe,➡️ 国内',
+    // 2. 如果你知道具体的绝对路径，也可以使用 PROCESS-PATH
+    // 'PROCESS-PATH,D:\\Games\\Steam\\steam.exe,🌍 国外',
+
+    // 原有的自定义规则
+    //'DOMAIN-SUFFIX,dollei.top,🌍 国外',
+    //'DOMAIN-SUFFIX,dollei.synology.me,🌍 国外',
   ];
 
   if (Array.isArray(config.rules)) {
@@ -10,6 +16,6 @@ function main(config) {
   } else {
     config.rules = customRules;
   }
-
+  
   return config;
 }
