@@ -8,7 +8,7 @@ function main(config) {
 
     // 原有的自定义规则
     //'DOMAIN-SUFFIX,dollei.top,🌍 国外',
-    //'DOMAIN-SUFFIX,dollei.synology.me,🌍 国外',
+    //'DOMAIN-SUFFIX,dollei.synology.me,➡️ 国内',
   ];
 
   if (Array.isArray(config.rules)) {
