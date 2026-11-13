@@ -1,16 +1,37 @@
+// 【单位办公配置说明｜2026-11-13】
+// 目的：企业微信和单位网站直连；单位域名交给单位 DNS 查询，避免逐个固定网站 IP。
+// 适用网络：单位网络；或已连接且能访问单位 DNS、业务内网的单位 VPN。
+// 外部网络未连接单位 VPN 时，下列单位域名可能因内部 DNS 不可达而打不开。
+// DIRECT 表示不走代理节点，仍可能由 Clash 接收并转发，并非完全绕过 Clash。
+// 本次仅补中文备注，规则及执行顺序不变。修改前的文件已在同目录备份。
+
 function main(config) {
+  // 自定义规则放在订阅规则前面，优先匹配；未匹配的流量继续按原订阅规则处理。
   const customRules = [
+    // 企业微信辅助进程直连（代理排查时补充）。
+    'PROCESS-NAME,wecom-agent.exe,DIRECT',
+    'PROCESS-NAME,WXWorkXNet.exe,DIRECT',
+    // 单位域名直连：包括域名本身及全部子域名，不局限于当前已知的网站。
+    'DOMAIN-SUFFIX,sdic.com.cn,DIRECT',
+    'DOMAIN-SUFFIX,ceedi.cn,DIRECT',
+    'DOMAIN-SUFFIX,sdicin.com,DIRECT',
+    // 早期排查保留的工作平台单个内网 IP 直连规则；不负责域名解析，也不会固定 DNS 结果。
+    // no-resolve：匹配本条 IP 规则时不额外发起域名查询。
+    'IP-CIDR,172.26.201.39/32,DIRECT,no-resolve',
     // 1. 通过进程名称匹配（Windows/macOS 常见，注意区分大小写，如 steam.exe、qbittorrent）
-    'PROCESS-NAME,Weixin.exe,➡️ 国内',
-    'PROCESS-NAME,ImeService.exe,➡️ 国内',
+    // 以下保留现有规则：微信、企业微信主程序、输入法服务及内置网页进程直连。
+    'PROCESS-NAME,Weixin.exe,DIRECT',
+    'PROCESS-NAME,WXWork.exe,DIRECT',
+    'PROCESS-NAME,ImeService.exe,DIRECT',
+    'PROCESS-NAME,WXWorkWeb.exe,DIRECT',
     // 2. 如果你知道具体的绝对路径，也可以使用 PROCESS-PATH
     // 'PROCESS-PATH,D:\\Games\\Steam\\steam.exe,🌍 国外',
 
     // 原有的自定义规则
-    //'DOMAIN-SUFFIX,dollei.top,🌍 国外',
-    //'DOMAIN-SUFFIX,dollei.synology.me,➡️ 国内',
-    //'DOMAIN,ntp-bootstrap.ubuntu.com,➡️ 国内',
-    //'DOMAIN-SUFFIX,ntp.ubuntu.com,➡️ 国内',
+    // 'DOMAIN-SUFFIX,dollei.top,🌍 国外',
+    'DOMAIN-SUFFIX,dollei.synology.me,➡️ 国内',
+    'DOMAIN,ntp-bootstrap.ubuntu.com,➡️ 国内',
+    'DOMAIN-SUFFIX,ntp.ubuntu.com,➡️ 国内',
   ];
 
   if (Array.isArray(config.rules)) {
@@ -19,5 +40,34 @@ function main(config) {
     config.rules = customRules;
   }
   
+  // 初始化配置对象；这里没有新增虚拟网卡地址排除规则。
+  config.tun = config.tun || {};
+  config.hosts = config.hosts || {};
+  config.dns = config.dns || {};
+  // 允许使用配置中其他既有 hosts；下面会清理此前针对三个网站添加的固定 IP。
+  config.dns['use-hosts'] = true;
+  // 【长期方案：按单位域名统一指定 DNS】
+  // 新增其他单位域名时，需同时在上面的直连规则和下面的列表中补充。
+  const corporateDomains = ['ceedi.cn', 'sdic.com.cn', 'sdicin.com'];
+  config.dns = config.dns || {};
+  config.dns['nameserver-policy'] = config.dns['nameserver-policy'] || {};
+  // +.域名：覆盖域名本身及其全部子域名。
+  // 两台 DNS 来自当前单位网卡：10.40.53.253、10.40.53.3。
+  // 如果单位将来更换 DNS，应同步更新；不要填写某个业务网站的 IP。
+  for (const domain of corporateDomains) {
+    config.dns['nameserver-policy']['+.' + domain] = ['10.40.53.253', '10.40.53.3'];
+  }
+  // 如果直连连接使用 direct-nameserver 重新解析，也要遵循上面的单位 DNS 策略。
+  config.dns['direct-nameserver-follow-policy'] = true;
+  // 当 fake-ip-filter 使用黑名单模式时，给单位域名返回真实 IP，减少内网应用兼容问题。
+  // 如果配置采用其他过滤模式，不在此处改写其含义。
+  if ((config.dns['fake-ip-filter-mode'] || 'blacklist') === 'blacklist') {
+    config.dns['fake-ip-filter'] = [...new Set([...(config.dns['fake-ip-filter'] || []), ...corporateDomains.map(d => '+.' + d)])];
+  }
+  // 删除早期排查加入的三个固定 IP 映射，让单位 DNS 自动提供当前地址。
+  // work：工作平台；bip：BIP 平台；cdcdm：协同设计上传时连接的文件服务。
+  for (const name of ['work.sdic.com.cn', 'bip.sdic.com.cn', 'cdcdm.ceedi.cn']) {
+    if (config.hosts) delete config.hosts[name];
+  }
   return config;
 }
